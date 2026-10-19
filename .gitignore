@@ -1,0 +1,14 @@
+/Binaries/
+/DerivedDataCache/
+/Intermediate/
+/Saved/
+/.vs/
+*.sln
+*.suo
+__pycache__/
+*.py[cod]
+
+# Release archives and their checksums belong to a specific exported snapshot.
+/Manifest.sha256
+/*.zip
+/Releases/

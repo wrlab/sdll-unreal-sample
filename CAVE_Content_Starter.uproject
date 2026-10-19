@@ -1,0 +1,27 @@
+{
+  "FileVersion": 3,
+  "EngineAssociation": "5.8",
+  "Category": "CAVE",
+  "Description": "Standalone CAVE nDisplay configuration and sample content for Unreal Engine 5.8.3.",
+  "TargetPlatforms": [
+    "Windows"
+  ],
+  "Plugins": [
+    {
+      "Name": "nDisplay",
+      "Enabled": true
+    },
+    {
+      "Name": "Switchboard",
+      "Enabled": true
+    },
+    {
+      "Name": "DisplayClusterLaunch",
+      "Enabled": true
+    },
+    {
+      "Name": "AndroidFileServer",
+      "Enabled": false
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+# Keep readable project files in a consistent format across checkouts.
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Unreal maps and assets use Git LFS; never normalize their binary bytes.
+*.uasset filter=lfs diff=lfs merge=lfs -text
+*.umap filter=lfs diff=lfs merge=lfs -text
+
+# The small README preview is stored directly in Git.
+*.png binary

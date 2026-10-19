@@ -12,10 +12,6 @@
       "Enabled": true
     },
     {
-      "Name": "Switchboard",
-      "Enabled": true
-    },
-    {
       "Name": "DisplayClusterLaunch",
       "Enabled": true
     },

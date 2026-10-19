@@ -2,18 +2,18 @@
 
 `CAVE_Content_Starter`는 Unreal Engine에서 SDLL CAVE용 콘텐츠를 제작하고 여러 화면에 출력하기 위한 프로젝트입니다. 정면, 왼쪽, 오른쪽, 후면, 천장의 5개 면에 8개 화면을 출력합니다. 여러 화면에 맞춰 장면을 그리는 Unreal 기능인 **nDisplay**를 사용합니다.
 
-콘텐츠는 `CAVE_Content_Sample`에서 제작합니다. `CAVE_nDisplay_Sample`에서 콘텐츠를 CAVE 화면 배치와 함께 확인한 뒤, Switchboard로 현장 출력을 실행합니다. 이 문서는 프로젝트 열기부터 레벨 편집, nDisplay 설정, 현장 실행까지의 절차를 안내합니다.
+콘텐츠는 `CAVE_Content_Sample`에서 제작합니다. `CAVE_nDisplay_Sample`에서 콘텐츠를 CAVE 화면 배치와 함께 확인한 뒤, 에디터의 **nDisplay Launch**로 출력을 실행합니다. 이 문서는 프로젝트 열기부터 레벨 편집, nDisplay 설정, 현장 실행까지의 절차를 안내합니다.
 
 - [프로젝트 열기](#프로젝트-열기)
 - [프로젝트 구성 이해하기](#프로젝트-구성-이해하기)
 - [콘텐츠 제작하기](#콘텐츠-제작하기)
 - [CAVE 화면에서 확인하기](#cave-화면에서-확인하기)
 - [nDisplay 설정하기](#ndisplay-설정하기)
-- [Switchboard로 실행하기](#switchboard로-실행하기)
+- [CAVE 출력 실행하기](#cave-출력-실행하기)
 
 ## 프로젝트 열기
 
-프로젝트의 기준 환경은 **Unreal Engine 5.8.3, Windows, DirectX 12**입니다. 필요한 nDisplay와 Switchboard 기능은 프로젝트에 이미 켜져 있습니다.
+프로젝트의 기준 환경은 **Unreal Engine 5.8.3, Windows, DirectX 12**입니다. 필요한 nDisplay와 에디터의 nDisplay Launch 기능은 프로젝트에 이미 켜져 있습니다.
 
 ### Git에서 내려받기
 
@@ -55,7 +55,7 @@ Unreal에서 **레벨(Level)**은 오브젝트와 조명을 배치한 장면을 
 | `CAVE_Content_Sample` | 레벨 `.umap` | **SDLL용 콘텐츠 제작을 위한 레벨**입니다. 오브젝트, 조명, 연출을 배치하고 수정합니다. |
 | `CAVE_nDisplay_Sample` | 레벨 `.umap` | 제작한 콘텐츠가 CAVE의 각 화면에 어떻게 보이는지 확인하고 실행하는 레벨입니다. |
 | `NDC_CAVE_Sample` | nDisplay 구성 에셋 `.uasset` | CAVE 화면의 위치와 크기, 관람자의 눈 위치, 화면별 출력 방법을 저장한 설정 파일입니다. |
-| `NDC_CAVE_Sample.ndisplay` | 내보낸 설정 파일 | 위 구성 에셋에서 **Export** 기능으로 만든 파일입니다. Switchboard에서 사용할 수 있습니다. |
+| `NDC_CAVE_Sample.ndisplay` | 내보낸 설정 파일 | 위 구성 에셋에서 **Export** 기능으로 만든 파일입니다. 화면 배치와 출력 노드 설정을 텍스트로 저장합니다. |
 
 제작과 실행에 사용하는 주요 파일은 다음 위치에 있습니다.
 
@@ -148,7 +148,7 @@ Outliner는 현재 장면에 놓인 오브젝트, 조명, 카메라를 보여 �
 5. 추가한 서브레벨을 우클릭하고 **Change Streaming Method > Always Loaded**를 선택합니다.
 6. 추가한 콘텐츠 레벨의 위치와 회전값을 0으로 유지한 뒤 저장합니다.
 
-이후 `My_Content`에서 제작하고 `My_CAVE`에서 출력 결과를 확인합니다. Switchboard의 실행 레벨도 `/Game/Maps/My_CAVE`로 지정합니다.
+이후 `My_Content`에서 제작하고, `My_CAVE`를 열어 출력 결과를 확인하고 실행합니다.
 
 ## CAVE 화면에서 확인하기
 
@@ -209,75 +209,9 @@ nDisplay는 관람자의 눈 위치와 각 화면의 위치를 기준으로 화�
 4. 구성 에셋을 저장합니다.
 5. `.ndisplay` 파일로 실행한다면 **Export**로 `Content/CAVE/Sample/NDC_CAVE_Sample.ndisplay`를 갱신합니다.
 
-구성 에셋을 저장해도 이전에 Export한 `.ndisplay` 파일은 자동 갱신되지 않습니다. 현장 실행에는 Switchboard에서 선택한 구성을 사용하므로, 수정한 에셋 또는 최신 Export 파일을 지정합니다. `.ndisplay`는 출력 설정 파일이며 콘텐츠 레벨과 머티리얼은 프로젝트의 별도 에셋으로 관리합니다.
+구성 에셋을 저장해도 이전에 Export한 `.ndisplay` 파일은 자동 갱신되지 않습니다. 이 문서의 에디터 실행은 레벨에 배치한 `NDC_CAVE_Sample`의 구성을 사용합니다. `.ndisplay`는 출력 설정 파일이며 콘텐츠 레벨과 머티리얼은 프로젝트의 별도 에셋으로 관리합니다.
 
-## Switchboard로 실행하기
-
-Switchboard와 SwitchboardListener는 실제 CAVE 출력을 실행할 때 사용하는 프로그램입니다. 콘텐츠 제작과 에디터 미리보기를 마친 뒤 아래 순서로 설정합니다.
-
-| 구성 | 역할 |
-| --- | --- |
-| `NDC_CAVE_Sample` | 화면 배치, 관람 위치, 해상도와 출력 노드를 정의하는 nDisplay 설정입니다. |
-| Switchboard | nDisplay 설정을 읽고 화면을 출력할 Unreal 프로그램들을 실행·종료하며 상태를 확인하는 관리 도구입니다. |
-| SwitchboardListener | 출력 PC에서 Switchboard의 명령을 받아 Unreal 프로그램을 실행·종료합니다. 이 문서에서는 Listener로 줄여 부릅니다. |
-
-이 프로젝트는 **한 PC에서 8개 nDisplay 노드**를 실행하는 구성입니다. 화면 출력을 맡는 Unreal 프로그램이 8개 실행되며, 같은 PC의 Listener 하나가 실행과 종료 명령을 처리합니다. 아래 절차는 UE 5.8에서 `.uproject`를 직접 실행하는 구성을 기준으로 합니다.
-
-### 1. 실행 준비
-
-1. Unreal Editor에서 `CAVE_Content_Starter.uproject`를 엽니다.
-2. 콘텐츠 레벨, 실행 레벨, 수정한 nDisplay 구성 에셋을 모두 저장합니다.
-3. 처음 설정하는 PC에서는 **Edit > Editor Preferences > Plugins > Switchboard**를 엽니다. **Install Dependencies**가 표시되면 눌러 설치 안내를 완료합니다. 이미 설치되어 있으면 다음 단계로 진행합니다.
-
-프로젝트에는 nDisplay와 Switchboard 플러그인이 활성화되어 있습니다. 툴바에 Switchboard 메뉴가 보이지 않으면 **Edit > Plugins**에서 활성화 상태를 확인하고, 플러그인을 새로 켰다면 에디터를 다시 시작합니다. 설치와 Listener 실행에 관한 설명은 [Switchboard Quick Start](https://dev.epicgames.com/documentation/en-us/unreal-engine/switchboard-quick-start-for-unreal-engine)에서 확인할 수 있습니다.
-
-### 2. Listener 실행
-
-1. CAVE 출력을 실행할 PC의 Unreal Editor 툴바에서 Switchboard 메뉴를 엽니다.
-2. **Launch Switchboard Listener**를 선택합니다.
-3. Listener가 실행되었는지 작업 표시줄에서 확인합니다. 창은 자동으로 최소화될 수 있으며, CAVE를 실행하는 동안 켜 둡니다.
-
-현재처럼 한 PC에서 모든 출력을 실행할 때는 해당 PC에 Listener 하나를 실행합니다. 여러 PC로 구성할 때는 각 출력 PC에서 Listener를 실행합니다.
-
-Switchboard를 먼저 열었다면 상단의 **Tools > Listener**로도 현재 PC의 Listener를 실행할 수 있습니다.
-
-![Switchboard의 Tools 메뉴에서 Listener 선택](Preview/Switchboard/04_Listener_Menu.png)
-
-*Switchboard의 Tools 메뉴입니다. Listener를 선택하면 현재 PC에서 명령을 받을 프로그램이 실행됩니다.*
-
-### 3. Switchboard에 프로젝트 등록
-
-1. Unreal Editor 툴바의 **Launch Switchboard**를 선택합니다.
-2. 처음 열리는 **Add new Switchboard Configuration** 창을 사용합니다. 기존 설정이 열렸다면 **Configs > New Config**를 선택합니다.
-3. 아래 표에 따라 프로젝트와 엔진 경로를 지정합니다.
-
-| 항목 | 지정할 값 |
-| --- | --- |
-| Config Path | `SDLL_CAVE.json`처럼 이 PC에서 사용할 Switchboard 설정 파일의 저장 경로 |
-| uProject | `CAVE_Content_Starter.uproject`의 전체 경로 |
-| Engine Dir | Unreal Engine 5.8 설치 경로 아래의 `Engine` 폴더 |
-
-Git으로 받은 프로젝트이므로 **Perforce** 항목은 체크를 해제한 뒤 **OK**를 누릅니다. **Config Path**에는 프로젝트 경로와 장치 연결 정보를 저장할 Switchboard 설정 파일을 지정합니다. CAVE 화면 배치를 정의하는 nDisplay 에셋은 다음 단계에서 등록합니다.
-
-![Switchboard 새 설정 창의 Config Path, uProject, Engine Dir와 해제된 Perforce 항목](Preview/Switchboard/01_Project_Configuration.png)
-
-*UE 5.8 Switchboard에 이 프로젝트를 등록하는 예시입니다. uProject는 Git으로 받은 프로젝트의 위치, Engine Dir는 자신의 PC에 설치된 엔진 위치로 바꿉니다.*
-
-### 4. nDisplay 구성과 실행 레벨 선택
-
-1. Switchboard에서 **Add Device > nDisplay**를 선택합니다.
-2. **Config File > Browse**로 `Content/CAVE/Sample/NDC_CAVE_Sample.uasset`을 선택합니다. Export 파일을 사용할 경우 같은 폴더의 최신 `.ndisplay`를 선택합니다.
-3. **Launch As**를 **Standalone (ICVFX)**로 지정하고 **OK**를 누릅니다.
-4. nDisplay 장치 목록에 8개 노드가 등록되는지 확인합니다.
-5. 상단 **Level** 목록에서 `CAVE_nDisplay_Sample`을 선택합니다. 목록에 없으면 옆의 **Refresh level list** 버튼을 누릅니다.
-
-![nDisplay 추가 창에서 NDC_CAVE_Sample.uasset과 Standalone ICVFX 선택](Preview/Switchboard/02_Add_nDisplay.png)
-
-*Config File에 NDC_CAVE_Sample.uasset을 지정하고 Launch As를 Standalone (ICVFX)로 선택한 화면입니다. .uproject를 직접 실행하므로 Packaged Executable은 비워 둡니다.*
-
-선택할 실행 레벨 경로는 `/Game/Maps/CAVE_nDisplay_Sample`입니다. 작품용 레벨을 만들었다면 `/Game/Maps/My_CAVE`처럼 해당 실행 레벨을 선택합니다. 기본 실행 절차는 [Unreal Engine nDisplay Quick Start](https://dev.epicgames.com/documentation/en-us/unreal-engine/ndisplay-quick-start-for-unreal-engine)에서도 확인할 수 있습니다.
-
-### 5. 출력 대상 확인
+### 출력 대상
 
 제공된 `.ndisplay` 파일의 설정은 다음과 같습니다. 각 노드는 화면 하나를 **3840 × 2160px**로 출력합니다. GPU 열은 사용할 그래픽카드 번호이며, 설정 파일의 `graphicsAdapter` 값에 해당합니다.
 
@@ -292,27 +226,22 @@ Git으로 받은 프로젝트이므로 **Perforce** 항목은 체크를 해제�
 | R1 오른쪽 뒤 | node_R1_DISPLAY4 | 127.0.0.7 | 0 | 0 | 0 |
 | C0 천장 앞 | node_C0_DISPLAY2 | 127.0.0.8 | 0 | -7680 | -2160 |
 
-표의 `127.0.0.*` 주소들은 모두 현재 PC를 가리킵니다. 이런 주소를 **루프백 주소**라고 부릅니다. 여러 노드의 기준이 되는 **Primary Node**는 `node_F0_DISPLAY6`입니다. 여러 PC로 확장할 때는 각 PC의 실제 IP와 Listener 연결을 구성하며, 같은 구성에서 루프백 주소와 다른 PC의 주소를 섞어 사용하지 않습니다.
+표의 `127.0.0.*` 주소들은 모두 현재 PC를 가리킵니다. 이런 주소를 **루프백 주소**라고 부릅니다. 여러 노드의 기준이 되는 **Primary Node**는 `node_F0_DISPLAY6`입니다.
 
 노드명의 `DISPLAY` 숫자는 Windows 모니터 번호와 다를 수 있습니다. 출력 대상은 실제 화면 역할, GPU, 데스크톱 창 좌표를 기준으로 확인합니다. 모니터 배치나 화면 배율이 바뀌면 창 위치와 크기도 다시 확인합니다.
 
 **L0는 3840 × 2160 전체를 렌더한 뒤 LED에서 우측 절반인 x = 1920~3839를 사용합니다.** 전체 영상을 절반 너비로 축소하지 않습니다. L0에 필요한 콘텐츠와 표식은 이 활성 영역에 배치합니다. 후면의 `B0`는 현장 명칭 `R3`에 해당합니다.
 
-### 6. Listener에 연결하고 CAVE 출력 실행
+## CAVE 출력 실행하기
 
-![CAVE_nDisplay_Sample 레벨과 8개 nDisplay 노드가 등록된 Switchboard 화면](Preview/Switchboard/03_Nodes_and_Controls.png)
+이 프로젝트는 한 PC에서 8개 nDisplay 노드를 실행합니다. 에디터에 이미 활성화된 **nDisplay Launch**를 사용합니다.
 
-*샘플의 8개 노드를 등록하고 Level을 CAVE_nDisplay_Sample로 선택한 화면입니다. Listener에 연결하기 전이므로 노드가 회색이며 실행 버튼은 비활성화되어 있습니다.*
+1. 콘텐츠 레벨과 nDisplay 구성 에셋을 저장합니다.
+2. **Content Browser > Content > Maps**에서 `CAVE_nDisplay_Sample`을 엽니다. 작품용 레벨을 만들었다면 `My_CAVE`를 엽니다.
+3. 에디터 툴바의 **nDisplay Launch** 옆 드롭다운 메뉴에서 **Configuration > NDC_CAVE_Sample**을 선택합니다.
+4. **Nodes > Select nDisplay Nodes**에서 8개 노드를 모두 선택합니다. **Select Primary Node**는 `node_F0_DISPLAY6`로 지정합니다.
+5. 툴바의 **nDisplay Launch** 버튼을 누릅니다. 선택한 노드가 실행되면 구성에 지정된 위치에 출력 창이 나타납니다.
+6. 정면, 좌우, 후면, 천장의 방향 표식과 화면 경계가 올바르게 이어지는지 확인합니다.
+7. 종료할 때는 에디터 툴바의 같은 위치에 표시되는 정지 아이콘을 누릅니다.
 
-왼쪽 **Level** 아래 버튼 줄의 맨 오른쪽 플러그 아이콘이 전체 연결 버튼입니다. 바로 왼쪽의 위쪽 화살표 아이콘은 전체 실행·종료 버튼입니다. 오른쪽의 **nDisplay Monitor**에서는 각 노드의 연결과 출력 상태를 확인합니다.
-
-아래 버튼 이름은 마우스를 올렸을 때 표시되는 툴팁을 기준으로 합니다.
-
-1. Switchboard 상단의 **Connect all devices**를 눌러 8개 노드를 연결합니다. 개별 연결은 각 노드의 **Connect to listener**를 사용합니다.
-2. 8개 노드가 모두 연결되어 실행 버튼이 활성화되었는지 확인합니다.
-3. **Start all connected devices**를 눌러 전체 노드를 실행합니다. 노드별로 Unreal 프로그램이 시작되면 지정된 위치에 CAVE 출력 창이 나타납니다.
-4. 화면별 표식이 정면, 좌우, 후면, 천장에 올바르게 표시되는지 확인합니다.
-5. 기본 관람 위치에서 면 경계의 연결과 상하 방향을 확인합니다. 현장 장비의 색상, 밝기, 프레임 동기화와 성능도 확인합니다.
-6. 종료할 때는 **Stop all running devices**를 눌러 전체 노드를 중지합니다.
-
-다음에 실행할 때는 Listener를 켜고, Switchboard의 **Configs > Load Config**에서 저장한 설정을 불러온 뒤 연결과 실행 단계를 반복합니다. 콘텐츠를 수정했다면 레벨을 저장하고 노드를 다시 실행합니다.
+출력 창은 위 표의 위치와 해상도로 열립니다. 해당 화면이 연결되어 있지 않은 PC에서는 일부 창이 화면 밖에 놓일 수 있습니다. 콘텐츠를 수정한 뒤에는 저장하고 출력을 다시 실행합니다. [Unreal Engine nDisplay Launch 사용법](https://dev.epicgames.com/documentation/en-us/unreal-engine/ndisplay-quick-launch-local-tool-in-unreal-engine)

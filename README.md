@@ -239,6 +239,12 @@ Switchboard와 SwitchboardListener는 실제 CAVE 출력을 실행할 때 사용
 
 현재처럼 한 PC에서 모든 출력을 실행할 때는 해당 PC에 Listener 하나를 실행합니다. 여러 PC로 구성할 때는 각 출력 PC에서 Listener를 실행합니다.
 
+Switchboard를 먼저 열었다면 상단의 **Tools > Listener**로도 현재 PC의 Listener를 실행할 수 있습니다.
+
+![Switchboard의 Tools 메뉴에서 Listener 선택](Preview/Switchboard/04_Listener_Menu.png)
+
+*Switchboard의 Tools 메뉴입니다. Listener를 선택하면 현재 PC에서 명령을 받을 프로그램이 실행됩니다.*
+
 ### 3. Switchboard에 프로젝트 등록
 
 1. Unreal Editor 툴바의 **Launch Switchboard**를 선택합니다.
@@ -253,6 +259,10 @@ Switchboard와 SwitchboardListener는 실제 CAVE 출력을 실행할 때 사용
 
 Git으로 받은 프로젝트이므로 **Perforce** 항목은 체크를 해제한 뒤 **OK**를 누릅니다. **Config Path**에는 프로젝트 경로와 장치 연결 정보를 저장할 Switchboard 설정 파일을 지정합니다. CAVE 화면 배치를 정의하는 nDisplay 에셋은 다음 단계에서 등록합니다.
 
+![Switchboard 새 설정 창의 Config Path, uProject, Engine Dir와 해제된 Perforce 항목](Preview/Switchboard/01_Project_Configuration.png)
+
+*UE 5.8 Switchboard에 이 프로젝트를 등록하는 예시입니다. uProject는 Git으로 받은 프로젝트의 위치, Engine Dir는 자신의 PC에 설치된 엔진 위치로 바꿉니다.*
+
 ### 4. nDisplay 구성과 실행 레벨 선택
 
 1. Switchboard에서 **Add Device > nDisplay**를 선택합니다.
@@ -260,6 +270,10 @@ Git으로 받은 프로젝트이므로 **Perforce** 항목은 체크를 해제�
 3. **Launch As**를 **Standalone (ICVFX)**로 지정하고 **OK**를 누릅니다.
 4. nDisplay 장치 목록에 8개 노드가 등록되는지 확인합니다.
 5. 상단 **Level** 목록에서 `CAVE_nDisplay_Sample`을 선택합니다. 목록에 없으면 옆의 **Refresh level list** 버튼을 누릅니다.
+
+![nDisplay 추가 창에서 NDC_CAVE_Sample.uasset과 Standalone ICVFX 선택](Preview/Switchboard/02_Add_nDisplay.png)
+
+*Config File에 NDC_CAVE_Sample.uasset을 지정하고 Launch As를 Standalone (ICVFX)로 선택한 화면입니다. .uproject를 직접 실행하므로 Packaged Executable은 비워 둡니다.*
 
 선택할 실행 레벨 경로는 `/Game/Maps/CAVE_nDisplay_Sample`입니다. 작품용 레벨을 만들었다면 `/Game/Maps/My_CAVE`처럼 해당 실행 레벨을 선택합니다. 기본 실행 절차는 [Unreal Engine nDisplay Quick Start](https://dev.epicgames.com/documentation/en-us/unreal-engine/ndisplay-quick-start-for-unreal-engine)에서도 확인할 수 있습니다.
 
@@ -285,6 +299,12 @@ Git으로 받은 프로젝트이므로 **Perforce** 항목은 체크를 해제�
 **L0는 3840 × 2160 전체를 렌더한 뒤 LED에서 우측 절반인 x = 1920~3839를 사용합니다.** 전체 영상을 절반 너비로 축소하지 않습니다. L0에 필요한 콘텐츠와 표식은 이 활성 영역에 배치합니다. 후면의 `B0`는 현장 명칭 `R3`에 해당합니다.
 
 ### 6. Listener에 연결하고 CAVE 출력 실행
+
+![CAVE_nDisplay_Sample 레벨과 8개 nDisplay 노드가 등록된 Switchboard 화면](Preview/Switchboard/03_Nodes_and_Controls.png)
+
+*샘플의 8개 노드를 등록하고 Level을 CAVE_nDisplay_Sample로 선택한 화면입니다. Listener에 연결하기 전이므로 노드가 회색이며 실행 버튼은 비활성화되어 있습니다.*
+
+왼쪽 **Level** 아래 버튼 줄의 맨 오른쪽 플러그 아이콘이 전체 연결 버튼입니다. 바로 왼쪽의 위쪽 화살표 아이콘은 전체 실행·종료 버튼입니다. 오른쪽의 **nDisplay Monitor**에서는 각 노드의 연결과 출력 상태를 확인합니다.
 
 아래 버튼 이름은 마우스를 올렸을 때 표시되는 툴팁을 기준으로 합니다.
 
